@@ -26,7 +26,7 @@ def main():
 
     # TODO: Make this better, reduce nesting on "with open"
     with open(args.proxy_file, 'r+') as f, open(args.banned_file, 'w+') as banned, open(args.good_file, 'w+') as good, open(args.error_file, 'w+') as error:
-        proxies = f.readlines()
+        proxies = f.read().splitlines()
         for p in proxies:
             # TODO: Use multithreading to make it go ZOOM ZOOM
             log('Attempting to check proxy {}...'.format(p))
