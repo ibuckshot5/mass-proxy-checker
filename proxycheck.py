@@ -84,8 +84,6 @@ def log(message, char='+'):
 def verbose_log(message, char='+'):
     if args.verbose:
         print('--> [{}] {}'.format(char, message))
-    else:
-        pass
 
 if __name__ == '__main__':
     main()
