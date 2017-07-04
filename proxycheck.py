@@ -13,6 +13,7 @@ def main():
     parser.add_argument('-gf', '--good-file', default='good.txt', help='File to write good proxies too (not banned)')
     parser.add_argument('-ef', '--error-file', default='error.txt', help='File to store errored out proxies')
     parser.add_argument('-v', '--verbose', default=False, action='store_false', help='Verbose logging')
+    parser.add_argument('-de', '--display-exceptions', default=False, action='store_false', help='Display errors on console')
     # TODO:
     # parser.add_argument('-er', '--error-retry', default=False, action='store_false', help='Retry on proxy error')
     # parser.add_argument('-erl', '--error-retry-limit', default=3, help='Number of times to retry the proxy before it is declared not working')
@@ -46,7 +47,7 @@ def main():
                 nstatus = '{}, Niantic: Timed out after 5 seconds.'.format(p)
             except requests.exceptions.RequestException as e:
                 nstatus = '{pr}, Niantic: Unable to connect to the proxy {pr}, or timed out. Make sure to add https://, and the port.'.format(pr=p)
-                log('requestsexception: ' + str(e), '!')
+                error('requestsexception: ' + str(e))
 
             log(nstatus)
 
@@ -62,7 +63,7 @@ def main():
                 pstatus = '{}, PTC: Timed out after 5 seconds.'.format(p)
             except requests.exceptions.RequestException as e:
                 pstatus = '{pr}, PTC: Unable to connect to the proxy {pr}, or timed out. Make sure to add https://, and the port.'.format(pr=p)
-                log('requestsexception: ' + str(e), '!')
+                error('requestsexception: ' + str(e))
 
             log(pstatus)
 
@@ -83,7 +84,6 @@ def main():
 
     log('Done checking proxies. You can find them at {} for good ones, and {} for banned ones.'.format(args.good_file, args.banned_file))
 
-
 def log(message, char='+'):
     print('[{}] {}'.format(char, message))
 
@@ -91,6 +91,12 @@ def log(message, char='+'):
 def verbose_log(message, char='+'):
     if args.verbose:
         print('--> [{}] {}'.format(char, message))
+
+        
+def error(message):
+    if args.display_exceptions:
+        log(message, '!')
+
 
 if __name__ == '__main__':
     main()
