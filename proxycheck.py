@@ -72,7 +72,7 @@ def main():
             elif ('Timed out after 5 seconds.' in nstatus or 'Unable to connect to the proxy' in nstatus) or ('Timed out after 5 seconds.' in pstatus or 'Unable to connect to the proxy' in pstatus):
                 error.write('{}\n'.format(p))
             else:
-                banned.write('{}\n')
+                banned.write('{}\n'.format(p))
 
             log('Moving to next proxy...')
 
