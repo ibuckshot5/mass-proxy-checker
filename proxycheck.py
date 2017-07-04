@@ -47,7 +47,7 @@ def main():
                 nstatus = '{}, Niantic: Timed out after 5 seconds.'.format(p)
             except requests.exceptions.RequestException as e:
                 nstatus = '{pr}, Niantic: Unable to connect to the proxy {pr}, or timed out. Make sure to add https://, and the port.'.format(pr=p)
-                error('requestsexception: ' + str(e))
+                log_error('requestsexception: ' + str(e))
 
             log(nstatus)
 
@@ -63,7 +63,7 @@ def main():
                 pstatus = '{}, PTC: Timed out after 5 seconds.'.format(p)
             except requests.exceptions.RequestException as e:
                 pstatus = '{pr}, PTC: Unable to connect to the proxy {pr}, or timed out. Make sure to add https://, and the port.'.format(pr=p)
-                error('requestsexception: ' + str(e))
+                log_error('requestsexception: ' + str(e))
 
             log(pstatus)
 
@@ -93,7 +93,7 @@ def verbose_log(message, char='+'):
         print('--> [{}] {}'.format(char, message))
 
         
-def error(message):
+def log_error(message):
     if args.display_exceptions:
         log(message, '!')
 
