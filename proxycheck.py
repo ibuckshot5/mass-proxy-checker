@@ -12,6 +12,7 @@ def main():
     parser.add_argument('-bf', '--banned-file', default='banned.txt', help='File to write banned proxies to (banned)')
     parser.add_argument('-gf', '--good-file', default='good.txt', help='File to write good proxies too (not banned)')
     parser.add_argument('-ef', '--error-file', default='error.txt', help='File to store errored out proxies')
+    parser.add_argument('-t', '--timeout', default=5, help='Timeout for requests to Niantic and PTC servers.')
     parser.add_argument('-v', '--verbose', default=False, action='store_false', help='Verbose logging')
     parser.add_argument('-de', '--display-exceptions', default=False, action='store_false', help='Display errors on console')
     # TODO:
@@ -37,7 +38,7 @@ def main():
             }
             try:
                 verbose_log('Sending HTTP request to {}, watiting for response...'.format(niantic_url))
-                r = requests.get(niantic_url, proxies=pr, timeout=5, headers=niantic_headers)
+                r = requests.get(niantic_url, proxies=pr, timeout=float(args.timeout), headers=niantic_headers)
                 verbose_log('Received response from {} : {}'.format(niantic_url, r.status_code))
                 if r.status_code == 200:
                     nstatus = '{}, Niantic: 200 OK, proxy is not banned.'.format(p)
@@ -53,7 +54,7 @@ def main():
 
             try:
                 verbose_log('Sending HTTP request to {}, watiting for response...'.format(niantic_url))
-                r = requests.get(ptc_url, proxies=pr, timeout=5, headers=ptc_headers)
+                r = requests.get(ptc_url, proxies=pr, timeout=float(args.timeout), headers=ptc_headers)
                 verbose_log('Received response from {} : {}'.format(niantic_url, r.status_code))
                 if r.status_code == 200:
                     pstatus = '{}, PTC: 200 OK, proxy is not banned.'.format(p)
