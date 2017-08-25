@@ -45,7 +45,7 @@ def main():
                 if r.status_code == 403:
                     nstatus = '{}, Niantic: 403 Forbidden, proxy is banned.'.format(p)
             except requests.exceptions.Timeout:
-                nstatus = '{}, Niantic: Timed out after 5 seconds.'.format(p)
+                nstatus = '{}, Niantic: Timed out after {} seconds.'.format(p, args.timeout)
             except requests.exceptions.RequestException as e:
                 nstatus = '{pr}, Niantic: Unable to connect to the proxy {pr}, or timed out. Make sure to add https://, and the port.'.format(pr=p)
                 log_error('requestsexception: ' + str(e))
@@ -61,7 +61,7 @@ def main():
                 if r.status_code == 409:
                     pstatus = '{}, PTC: 409 Conflict, proxy is banned.'.format(p)
             except requests.exceptions.Timeout:
-                pstatus = '{}, PTC: Timed out after 5 seconds.'.format(p)
+                pstatus = '{}, PTC: Timed out after {} seconds.'.format(p, args.timeout)
             except requests.exceptions.RequestException as e:
                 pstatus = '{pr}, PTC: Unable to connect to the proxy {pr}, or timed out. Make sure to add https://, and the port.'.format(pr=p)
                 log_error('requestsexception: ' + str(e))
@@ -71,7 +71,7 @@ def main():
             # TODO: Implement a way to see "where proxies fucked up": IE, on Niantic, PTC or both
             if "200 OK, proxy is not banned." in nstatus and "200 OK, proxy is not banned." in pstatus:
                 good.write('{}\n'.format(p))
-            elif ('Timed out after 5 seconds.' in nstatus or 'Unable to connect to the proxy' in nstatus) or ('Timed out after 5 seconds.' in pstatus or 'Unable to connect to the proxy' in pstatus):
+            elif ('Timed out after' in nstatus or 'Unable to connect to the proxy' in nstatus) or ('Timed out after' in pstatus or 'Unable to connect to the proxy' in pstatus):
                 error.write('{}\n'.format(p))
             else:
                 banned.write('{}\n'.format(p))
