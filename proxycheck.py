@@ -10,7 +10,7 @@ def main():
     parser = argparse.ArgumentParser(description='Check some proxies')
     parser.add_argument('-pf', '--proxy-file', default='proxies.txt', help='Proxy file to check.')
     parser.add_argument('-bf', '--banned-file', default='banned.txt', help='File to write banned proxies to (banned)')
-    parser.add_argument('-gf', '--good-file', default='good.txt', help='File to write good proxies too (not banned)')
+    parser.add_argument('-gf', '--good-file', default='good.txt', help='File to write good proxies to (not banned)')
     parser.add_argument('-ef', '--error-file', default='error.txt', help='File to store errored out proxies')
     parser.add_argument('-t', '--timeout', default=5, help='Timeout for requests to Niantic and PTC servers.')
     parser.add_argument('-v', '--verbose', default=False, action='store_false', help='Verbose logging')
