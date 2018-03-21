@@ -60,6 +60,8 @@ def main():
                     pstatus = '{}, PTC: 200 OK, proxy is not banned.'.format(p)
                 if r.status_code == 409:
                     pstatus = '{}, PTC: 409 Conflict, proxy is banned.'.format(p)
+                if r.status_code == 403:
+                    pstatus = '{}, PTC: 403 Forbidden, either IP tempban or permban.'.format(p)
             except requests.exceptions.Timeout:
                 pstatus = '{}, PTC: Timed out after {} seconds.'.format(p, args.timeout)
             except requests.exceptions.RequestException as e:
